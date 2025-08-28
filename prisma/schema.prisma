@@ -1,0 +1,57 @@
+datasource db {
+  provider = "postgresql"   
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  avatar   String
+  password String
+  profileId  vendor[]
+}
+
+
+model Vendor {
+  id                Int      @id @default(autoincrement())
+  uuid              String   @unique
+  business_name     String
+  city              String
+  area              String
+  pincode           Int
+  category          String?   // Optional
+  subcategory       String?
+  business_register String
+  pan_card          Boolean  @default(false)
+  GST_no            String?   // GST numbers can contain letters (e.g., "29ABCDE1234F2Z5")
+  // Address & Location
+  address           String
+  lat               Float?
+  long              Float?
+  landmark          String?
+  // Documents / Images
+  adhar_front       String?   // file path / URL
+  adhar_back        String?
+  pan_card_image    String?
+  gst_certificate   String?
+  shop_license      String?
+  business_logo     String?
+  store_logo        String?
+  // Business Timings
+  opening_hours     String?   // e.g., "10:00 AM - 08:00 PM"
+  weekly_off_day    String?   // e.g., "Sunday"
+  // Banking & Payments
+  bank_details      String?   // JSON (account no, IFSC, etc.)
+  upi_id            String?   // e.g., "vendor@upi"
+  // Metadata
+  createdAt         DateTime @default(now())
+  // Relations
+  UserId            Int
+  user              User     @relation(fields: [UserId], references: [id])
+}

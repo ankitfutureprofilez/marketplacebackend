@@ -1,0 +1,28 @@
+1.  npm install prisma --save-dev
+2. npm install @prisma/client
+3. creater prisma  folder then after please  crea  schema.prisma  file 
+thenr  afer datasource db {
+  provider = "postgresql"   // or "mysql" | "sqlite" | "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+3. npx prisma generate
+4. 
+// prisma.js or prismaconfig.js
+const { PrismaClient } = require('@prisma/client');
+
+let prisma;
+
+if (!global._prisma) {
+  global._prisma = new PrismaClient();
+}
+
+prisma = global._prisma;
+
+module.exports = prisma;
+
+5. app.js condig require("./prismaconfig.js)
