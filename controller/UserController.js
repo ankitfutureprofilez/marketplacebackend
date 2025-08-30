@@ -62,18 +62,17 @@ exports.login = catchAsync(async (req, res) => {
     }
 });
 
-exports.GetUser = catchAsync(async (req,res)=>{
+exports.GetUser = catchAsync(async (req, res) => {
     try {
-        const user =  await primsa.user.findMany();
-
-        if(
-            !
-            
-            user
-        ){}
-        
+        const user = await primsa.user.findMany();
+        if (!user) {
+            return errorResponse(res, "User not found", 404);
+        }
+        return successResponse(res, "User Get SuccessFully", 200, {
+            user: user,
+        });
     } catch (error) {
-        console.log("error",error)
+        console.log("error", error)
         return errorResponse(res, error.message || "Internal Server Error", 500);
     }
 })
