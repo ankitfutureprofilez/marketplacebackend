@@ -7,51 +7,73 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 model User {
   id       Int    @id @default(autoincrement())
   name     String
   email    String @unique
   avatar   String
   password String
-  profileId  vendor[]
+  role     Role
+
+  // Relations
+  vendor    Vendor?   @relation("VendorUser", fields: [vendorId], references: [id])
+  vendorId  Int?
+  
+  customer  Customer? @relation("CustomerUser", fields: [customerId], references: [id])
+  customerId Int?
+
+  admin     Admin?    @relation("AdminUser", fields: [adminId], references: [id])
+  adminId   Int?
 }
 
+enum Role {
+  VENDOR
+  CUSTOMER
+  ADMIN
+}
 
 model Vendor {
-  id                Int      @id @default(autoincrement())
-  uuid              String   @unique
+  id        Int    @id @default(autoincrement())
+  uuid      String @unique
   business_name     String
   city              String
   area              String
   pincode           Int
-  category          String?   // Optional
+  category          String?
   subcategory       String?
   business_register String
   pan_card          Boolean  @default(false)
-  GST_no            String?   // GST numbers can contain letters (e.g., "29ABCDE1234F2Z5")
-  // Address & Location
+  GST_no            String?
   address           String
   lat               Float?
   long              Float?
   landmark          String?
-  // Documents / Images
-  adhar_front       String?   // file path / URL
+  adhar_front       String?
   adhar_back        String?
   pan_card_image    String?
   gst_certificate   String?
   shop_license      String?
   business_logo     String?
   store_logo        String?
-  // Business Timings
-  opening_hours     String?   // e.g., "10:00 AM - 08:00 PM"
-  weekly_off_day    String?   // e.g., "Sunday"
-  // Banking & Payments
-  bank_details      String?   // JSON (account no, IFSC, etc.)
-  upi_id            String?   // e.g., "vendor@upi"
-  // Metadata
+  opening_hours     String?
+  weekly_off_day    String?
+  bank_details      String?
+  upi_id            String?
   createdAt         DateTime @default(now())
-  // Relations
-  UserId            Int
-  user              User     @relation(fields: [UserId], references: [id])
+
+  users     User[] @relation("VendorUser")
+}
+
+model Customer {
+  id    Int    @id @default(autoincrement())
+  // customer fields...
+
+  users User[] @relation("CustomerUser")
+}
+
+model Admin {
+  id    Int    @id @default(autoincrement())
+  // admin fields...
+
+  users User[] @relation("AdminUser")
 }

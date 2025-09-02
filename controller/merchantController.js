@@ -80,7 +80,6 @@ exports.getAllVendors = catchAsync(async (req, res) => {
     }
 });
 
-// ================= GET SINGLE VENDOR =================
 exports.getVendorById = catchAsync(async (req, res) => {
     try {
         const { id } = req.params;
@@ -99,7 +98,6 @@ exports.getVendorById = catchAsync(async (req, res) => {
     }
 });
 
-// ================= UPDATE VENDOR =================
 exports.updateVendor = catchAsync(async (req, res) => {
     try {
         const { id } = req.params;
@@ -117,7 +115,7 @@ exports.updateVendor = catchAsync(async (req, res) => {
     }
 });
 
-// ================= DELETE VENDOR =================
+
 exports.deleteVendor = catchAsync(async (req, res) => {
     try {
         const { id } = req.params;

@@ -76,3 +76,12 @@ exports.GetUser = catchAsync(async (req, res) => {
         return errorResponse(res, error.message || "Internal Server Error", 500);
     }
 })
+
+exports.VerifyNumber = catchAsync(async (req, res) => {
+    try {
+        
+    } catch (error) {
+        console.log("error", error)
+        return errorResponse(res, error.message || "Internal Server Error", 500);
+    }
+})
