@@ -115,7 +115,6 @@ exports.updateVendor = catchAsync(async (req, res) => {
     }
 });
 
-
 exports.deleteVendor = catchAsync(async (req, res) => {
     try {
         const { id } = req.params;
